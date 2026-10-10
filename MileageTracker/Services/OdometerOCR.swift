@@ -1,11 +1,9 @@
-import UIKit
 import Vision
 
 enum OdometerOCR {
     /// Returns plausible odometer readings found in the image, best guess first.
-    static func readings(in image: UIImage) async -> [Double] {
-        guard let cgImage = image.cgImage else { return [] }
-        let orientation = CGImagePropertyOrientation(image.imageOrientation)
+    static func readings(in image: PlatformImage) async -> [Double] {
+        guard let (cgImage, orientation) = image.cgImageWithOrientation else { return [] }
         return await Task.detached(priority: .userInitiated) {
             let request = VNRecognizeTextRequest()
             request.recognitionLevel = .accurate
@@ -37,21 +35,5 @@ enum OdometerOCR {
         }
         var seen = Set<Double>()
         return sorted.compactMap { seen.insert($0.value).inserted ? $0.value : nil }
-    }
-}
-
-extension CGImagePropertyOrientation {
-    init(_ orientation: UIImage.Orientation) {
-        switch orientation {
-        case .up: self = .up
-        case .upMirrored: self = .upMirrored
-        case .down: self = .down
-        case .downMirrored: self = .downMirrored
-        case .left: self = .left
-        case .leftMirrored: self = .leftMirrored
-        case .right: self = .right
-        case .rightMirrored: self = .rightMirrored
-        @unknown default: self = .up
-        }
     }
 }

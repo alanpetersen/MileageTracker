@@ -20,8 +20,14 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CKSharingSupported</key>
+	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Mileage Tracker uses the camera to read your odometer.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UISupportedInterfaceOrientations</key>

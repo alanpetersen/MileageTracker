@@ -3,11 +3,12 @@ import SwiftUI
 /// Odometer and efficiency stats for one vehicle. Shared by the dashboard and the vehicle detail screen.
 struct VehicleOverviewRows: View {
     @Environment(AppSettings.self) private var settings
-    let vehicle: Vehicle
+    @ObservedObject var vehicle: Vehicle
 
     private var summary: Summary {
         let fallback = vehicle.powerType == .ev ? settings.defaultElectricityRate : nil
-        let segments = MileageCalculator.segments(from: vehicle.fuelEntries.map(\.record), fallbackCostPerUnit: fallback)
+        let segments = MileageCalculator.segments(from: vehicle.entryList.map(\.record), fallbackCostPerUnit: fallback,
+                                                  fallbackGasPrice: settings.gasPrice)
         return MileageCalculator.summary(of: segments)
     }
 
@@ -34,10 +35,10 @@ struct VehicleOverviewRows: View {
             if let cpm = summary.costPerMile {
                 LabeledContent("Cost per mile", value: cpm.formatted(.currency(code: "USD")))
             }
-            if let mpge = MileageCalculator.effectiveMPG(costPerMile: summary.costPerMile, gasPrice: settings.gasPrice) {
+            if let mpge = summary.effectiveMPG {
                 LabeledContent("Effective MPG", value: mpge.formatted(.number.precision(.fractionLength(1))))
                     .font(.headline)
-                Text("Miles per gallon a gas car would need to cost the same per mile at \(settings.gasPrice!.formatted(.currency(code: "USD")))/gal (\(settings.gasPriceDescription)).")
+                Text("Miles per gallon a gas car would need to cost the same, using the gas price recorded with each \(vehicle.powerType.entryTitle.lowercased()). Entries without one use today's price.")
                     .font(.caption).foregroundStyle(.secondary)
             } else if summary.costPerMile != nil {
                 Text("Set a gas price in Settings to see effective MPG.").font(.caption).foregroundStyle(.secondary)

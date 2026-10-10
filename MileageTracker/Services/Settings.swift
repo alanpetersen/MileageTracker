@@ -6,6 +6,8 @@ import Observation
 final class AppSettings {
     private let defaults = UserDefaults.standard
 
+    /// Shown next to entries you log, so others in a shared household can tell who added them.
+    var yourName: String { didSet { defaults.set(yourName, forKey: "yourName") } }
     var eiaAPIKey: String { didSet { defaults.set(eiaAPIKey, forKey: "eiaAPIKey") } }
     var stateCode: String { didSet { defaults.set(stateCode, forKey: "stateCode") } }
     var useManualGasPrice: Bool { didSet { defaults.set(useManualGasPrice, forKey: "useManualGasPrice") } }
@@ -18,6 +20,7 @@ final class AppSettings {
     private(set) var fetchError: String?
 
     init() {
+        yourName = defaults.string(forKey: "yourName") ?? ""
         eiaAPIKey = defaults.string(forKey: "eiaAPIKey") ?? ""
         stateCode = defaults.string(forKey: "stateCode") ?? "CA"
         useManualGasPrice = defaults.bool(forKey: "useManualGasPrice")
@@ -29,6 +32,11 @@ final class AppSettings {
                                  areaName: defaults.string(forKey: "fetchedGasArea") ?? "",
                                  period: defaults.string(forKey: "fetchedGasPeriod") ?? "")
         }
+    }
+
+    var loggedByName: String? {
+        let trimmed = yourName.trimmingCharacters(in: .whitespaces)
+        return trimmed.isEmpty ? nil : trimmed
     }
 
     /// The price effective-MPG calculations should use right now.

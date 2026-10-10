@@ -1,26 +1,50 @@
 import SwiftUI
+import CoreData
 
 struct SettingsView: View {
     @Environment(AppSettings.self) private var settings
     @Environment(\.dismiss) private var dismiss
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Vehicle.createdAt, ascending: true)])
+    private var vehicles: FetchedResults<Vehicle>
+    @AppStorage("defaultVehicleID") private var defaultVehicleID = ""
 
     var body: some View {
         @Bindable var settings = settings
         NavigationStack {
             Form {
                 Section {
+                    TextField("Your name", text: $settings.yourName)
+                        .textContentType(.givenName)
+                } header: {
+                    Text("You")
+                } footer: {
+                    Text("Shown next to entries you log, so people you share a household with can see who added them.")
+                }
+                Section {
+                    Picker("Default vehicle", selection: $defaultVehicleID) {
+                        Text("Last used").tag("")
+                        ForEach(vehicles) { vehicle in
+                            Text(vehicle.displayName).tag(vehicle.uuid?.uuidString ?? "")
+                        }
+                    }
+                } header: {
+                    Text("Vehicle")
+                } footer: {
+                    Text("Selected when the app opens. This is a setting for this device only.")
+                }
+                Section {
                     Picker("State", selection: $settings.stateCode) {
                         ForEach(GasPriceService.allStates, id: \.self) { Text($0).tag($0) }
                     }
                     SecureField("EIA API key", text: $settings.eiaAPIKey)
-                        .textInputAutocapitalization(.never)
+                        .neverAutocapitalize()
                         .autocorrectionDisabled()
                     Toggle("Enter gas price manually", isOn: $settings.useManualGasPrice)
                     HStack {
                         Text("Manual price ($/gal)")
                         Spacer()
                         TextField("0.00", value: $settings.manualGasPrice, format: .number)
-                            .keyboardType(.decimalPad)
+                            .decimalKeyboard()
                             .multilineTextAlignment(.trailing)
                             .frame(width: 80)
                     }
@@ -49,7 +73,7 @@ struct SettingsView: View {
                         Text("Default rate ($/kWh)")
                         Spacer()
                         TextField("0.17", value: $settings.defaultElectricityRate, format: .number)
-                            .keyboardType(.decimalPad)
+                            .decimalKeyboard()
                             .multilineTextAlignment(.trailing)
                             .frame(width: 80)
                     }
@@ -60,7 +84,7 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
-            .navigationBarTitleDisplayMode(.inline)
+            .inlineNavigationTitle()
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }
             }

@@ -25,7 +25,7 @@ struct OdometerCaptureSection: View {
         Section {
             HStack {
                 TextField(placeholder, text: $odometerText)
-                    .keyboardType(.decimalPad)
+                    .decimalKeyboard()
                     .focused(focus, equals: .odometer)
                     .onChange(of: odometerText) { _, _ in
                         // Typing over a scanned value makes it a manual entry.
@@ -49,17 +49,15 @@ struct OdometerCaptureSection: View {
                 }
             }
             if let ocrMessage { Text(ocrMessage).font(.caption).foregroundStyle(.secondary) }
-            if let photoData, let image = UIImage(data: photoData) {
-                Image(uiImage: image).resizable().scaledToFit().frame(maxHeight: 120).clipShape(.rect(cornerRadius: 8))
+            if let photoData, let image = PlatformImage(data: photoData) {
+                Image(platformImage: image).resizable().scaledToFit().frame(maxHeight: 120).clipShape(.rect(cornerRadius: 8))
             }
         } header: {
             Text("Odometer")
         } footer: {
             Text("Scan with the camera or type the reading. Always double-check scanned values.")
         }
-        .fullScreenCover(isPresented: $showingCamera) {
-            CameraPicker { image in process(image) }.ignoresSafeArea()
-        }
+        .photoCapture(isPresented: $showingCamera) { image in process(image) }
         .task {
             guard autoScan else { return }
             // Let the sheet finish presenting before stacking the camera on top of it.
@@ -68,8 +66,8 @@ struct OdometerCaptureSection: View {
         }
     }
 
-    private func process(_ image: UIImage) {
-        photoData = image.jpegData(compressionQuality: 0.7)
+    private func process(_ image: PlatformImage) {
+        photoData = image.jpegBytes(quality: 0.7)
         isReading = true
         ocrMessage = nil
         Task {
