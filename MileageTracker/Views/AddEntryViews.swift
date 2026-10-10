@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 private func odometerPlaceholder(for vehicle: Vehicle) -> String {
     guard let last = vehicle.currentOdometer else { return "Odometer (mi)" }
