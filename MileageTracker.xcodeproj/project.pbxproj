@@ -12,7 +12,10 @@
 		3356C5BD80234171FCA7F7BD /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAF9A7C6EC99B40C17E7B67 /* CameraPicker.swift */; };
 		47CBECE35003F09449573991 /* MileageTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8C725B09CD0AE0ED4F9D8B /* MileageTrackerApp.swift */; };
 		519D30CEA4494BE8E5590882 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B93527AE9B28472BE1D49AD /* SettingsView.swift */; };
+		61CBCE9ECFADDA47D37A5298 /* VehicleOverviewRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF2AFBFAE915844A097C498 /* VehicleOverviewRows.swift */; };
 		7A4261069B125031F4838313 /* OdometerCaptureSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73579F851AEF3CBDC33633B9 /* OdometerCaptureSection.swift */; };
+		7F84201F5748DEB84D278038 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FC9D75840A8B9B149EF8D2D /* Assets.xcassets */; };
+		810B32BE4952B3A5B79737AD /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9A555C28049BA37004F11D /* DashboardView.swift */; };
 		8227502289931C9C67995A7D /* VehicleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F55ADE14C44FB744ECEE58F /* VehicleDetailView.swift */; };
 		82A318846CB0D28A835DDF12 /* GasPriceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6654AB3E11831383793C7351 /* GasPriceService.swift */; };
 		830031AF365C50D62160AB03 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811FEBC9193E41934E526232 /* Settings.swift */; };
@@ -38,13 +41,16 @@
 		1F8C3EB25356C92341AEE98C /* MileageCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileageCalculator.swift; sourceTree = "<group>"; };
 		2841623F5106EF1C04918552 /* AddEntryViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntryViews.swift; sourceTree = "<group>"; };
 		2C8C725B09CD0AE0ED4F9D8B /* MileageTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileageTrackerApp.swift; sourceTree = "<group>"; };
-		34D3E6B70CA230B6FFBBE740 /* MileageTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MileageTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		34D3E6B70CA230B6FFBBE740 /* MileageTracker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MileageTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AAF9A7C6EC99B40C17E7B67 /* CameraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPicker.swift; sourceTree = "<group>"; };
+		3FC9D75840A8B9B149EF8D2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4255D392E4F58C7FC56B54A6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		4F55ADE14C44FB744ECEE58F /* VehicleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleDetailView.swift; sourceTree = "<group>"; };
 		6654AB3E11831383793C7351 /* GasPriceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPriceService.swift; sourceTree = "<group>"; };
 		73579F851AEF3CBDC33633B9 /* OdometerCaptureSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OdometerCaptureSection.swift; sourceTree = "<group>"; };
+		7E9A555C28049BA37004F11D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		811FEBC9193E41934E526232 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		8FF2AFBFAE915844A097C498 /* VehicleOverviewRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleOverviewRows.swift; sourceTree = "<group>"; };
 		C29BAE135D19E87C625EF573 /* VehicleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleListView.swift; sourceTree = "<group>"; };
 		C5092BD8353A35616D04BD59 /* OdometerOCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OdometerOCR.swift; sourceTree = "<group>"; };
 		C60383DF5F94DF5756DB3720 /* MileageTrackerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = MileageTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +87,7 @@
 		75CD12929B1AE91493B45B51 /* MileageTracker */ = {
 			isa = PBXGroup;
 			children = (
+				3FC9D75840A8B9B149EF8D2D /* Assets.xcassets */,
 				02EC66E1FE379EF6AFFB2FFF /* Info.plist */,
 				2C8C725B09CD0AE0ED4F9D8B /* MileageTrackerApp.swift */,
 				ED7BE0C31D030EE103DA5A70 /* Logic */,
@@ -96,10 +103,12 @@
 			children = (
 				2841623F5106EF1C04918552 /* AddEntryViews.swift */,
 				3AAF9A7C6EC99B40C17E7B67 /* CameraPicker.swift */,
+				7E9A555C28049BA37004F11D /* DashboardView.swift */,
 				73579F851AEF3CBDC33633B9 /* OdometerCaptureSection.swift */,
 				0B93527AE9B28472BE1D49AD /* SettingsView.swift */,
 				4F55ADE14C44FB744ECEE58F /* VehicleDetailView.swift */,
 				C29BAE135D19E87C625EF573 /* VehicleListView.swift */,
+				8FF2AFBFAE915844A097C498 /* VehicleOverviewRows.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -138,6 +147,7 @@
 			buildConfigurationList = F0765CDED975E6E70E48CFBE /* Build configuration list for PBXNativeTarget "MileageTracker" */;
 			buildPhases = (
 				D97B83BEF3BD4F96C99E7ED1 /* Sources */,
+				97CFE5A49B9AAA0C7F4CE8F7 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -176,6 +186,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = EC8CF3733E87D9B1C831B455 /* Build configuration list for PBXProject "MileageTracker" */;
 			developmentRegion = en;
@@ -197,6 +209,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		97CFE5A49B9AAA0C7F4CE8F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F84201F5748DEB84D278038 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D1E4E83C72C3BDAA10734177 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -212,6 +235,7 @@
 			files = (
 				EEBAAB91A12EA8DA01E0E139 /* AddEntryViews.swift in Sources */,
 				3356C5BD80234171FCA7F7BD /* CameraPicker.swift in Sources */,
+				810B32BE4952B3A5B79737AD /* DashboardView.swift in Sources */,
 				82A318846CB0D28A835DDF12 /* GasPriceService.swift in Sources */,
 				896D7DFB4745CACA6EE81D90 /* MileageCalculator.swift in Sources */,
 				47CBECE35003F09449573991 /* MileageTrackerApp.swift in Sources */,
@@ -222,6 +246,7 @@
 				519D30CEA4494BE8E5590882 /* SettingsView.swift in Sources */,
 				8227502289931C9C67995A7D /* VehicleDetailView.swift in Sources */,
 				D365A53CD8ECDE1C2D4B112B /* VehicleListView.swift in Sources */,
+				61CBCE9ECFADDA47D37A5298 /* VehicleOverviewRows.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,13 +402,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 294H47495Y;
 				INFOPLIST_FILE = MileageTracker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jthought.MileageTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.MileageTracker;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -411,13 +435,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 294H47495Y;
 				INFOPLIST_FILE = MileageTracker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jthought.MileageTracker;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.MileageTracker;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

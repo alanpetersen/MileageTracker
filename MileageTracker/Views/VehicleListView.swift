@@ -1,43 +1,36 @@
 import SwiftUI
 import SwiftData
 
+/// Pushed from the dashboard; relies on the dashboard's NavigationStack for vehicle detail navigation.
 struct VehicleListView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \Vehicle.createdAt) private var vehicles: [Vehicle]
     @State private var showingAdd = false
-    @State private var showingSettings = false
 
     var body: some View {
-        NavigationStack {
-            List {
-                ForEach(vehicles) { vehicle in
-                    NavigationLink(value: vehicle) {
-                        VehicleRow(vehicle: vehicle)
-                    }
-                }
-                .onDelete { offsets in
-                    for index in offsets { context.delete(vehicles[index]) }
+        List {
+            ForEach(vehicles) { vehicle in
+                NavigationLink(value: vehicle) {
+                    VehicleRow(vehicle: vehicle)
                 }
             }
-            .overlay {
-                if vehicles.isEmpty {
-                    ContentUnavailableView("No Vehicles", systemImage: "car",
-                                           description: Text("Add a vehicle to start tracking mileage."))
-                }
+            .onDelete { offsets in
+                for index in offsets { context.delete(vehicles[index]) }
             }
-            .navigationTitle("Vehicles")
-            .navigationDestination(for: Vehicle.self) { VehicleDetailView(vehicle: $0) }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Settings", systemImage: "gearshape") { showingSettings = true }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Add Vehicle", systemImage: "plus") { showingAdd = true }
-                }
-            }
-            .sheet(isPresented: $showingAdd) { AddVehicleView() }
-            .sheet(isPresented: $showingSettings) { SettingsView() }
         }
+        .overlay {
+            if vehicles.isEmpty {
+                ContentUnavailableView("No Vehicles", systemImage: "car",
+                                       description: Text("Add a vehicle to start tracking mileage."))
+            }
+        }
+        .navigationTitle("Vehicles")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Add Vehicle", systemImage: "plus") { showingAdd = true }
+            }
+        }
+        .sheet(isPresented: $showingAdd) { AddVehicleView() }
     }
 }
 

@@ -16,16 +16,9 @@ struct VehicleDetailView: View {
 
     var body: some View {
         let segments = segments
-        let summary = MileageCalculator.summary(of: segments)
         List {
             Section("Overview") {
-                if let odometer = vehicle.currentOdometer {
-                    LabeledContent("Odometer", value: "\(odometer.formatted(.number.precision(.fractionLength(0)))) mi")
-                }
-                if let first = vehicle.firstOdometer, let current = vehicle.currentOdometer, current > first {
-                    LabeledContent("Tracked", value: "\((current - first).formatted(.number.precision(.fractionLength(0)))) mi")
-                }
-                statsRows(summary)
+                VehicleOverviewRows(vehicle: vehicle)
             }
 
             Section("History") {
@@ -67,38 +60,6 @@ struct VehicleDetailView: View {
     private func segmentFor(_ item: HistoryItem, in segments: [Segment]) -> Segment? {
         guard case .entry(let entry) = item else { return nil }
         return segments.first { $0.id == entry.id }
-    }
-
-    @ViewBuilder
-    private func statsRows(_ summary: Summary) -> some View {
-        switch vehicle.powerType {
-        case .gas:
-            if let mpg = summary.milesPerUnit {
-                LabeledContent("Average MPG", value: mpg.formatted(.number.precision(.fractionLength(1))))
-            }
-            if let cpm = summary.costPerMile {
-                LabeledContent("Cost per mile", value: cpm.formatted(.currency(code: "USD")))
-            }
-        case .ev:
-            if let mikwh = summary.milesPerUnit {
-                LabeledContent("Efficiency", value: "\((1 / mikwh * 1000).formatted(.number.precision(.fractionLength(0)))) Wh/mi  ·  \(mikwh.formatted(.number.precision(.fractionLength(2)))) mi/kWh")
-            }
-            if let cpm = summary.costPerMile {
-                LabeledContent("Cost per mile", value: cpm.formatted(.currency(code: "USD")))
-            }
-            if let mpge = MileageCalculator.effectiveMPG(costPerMile: summary.costPerMile, gasPrice: settings.gasPrice) {
-                LabeledContent("Effective MPG", value: mpge.formatted(.number.precision(.fractionLength(1))))
-                    .font(.headline)
-                Text("Miles per gallon a gas car would need to cost the same per mile at \(settings.gasPrice!.formatted(.currency(code: "USD")))/gal (\(settings.gasPriceDescription)).")
-                    .font(.caption).foregroundStyle(.secondary)
-            } else if summary.costPerMile != nil {
-                Text("Set a gas price in Settings to see effective MPG.").font(.caption).foregroundStyle(.secondary)
-            }
-        }
-        if summary.miles == 0 {
-            Text("Log at least two \(vehicle.powerType.entryTitle.lowercased())s with odometer readings to see efficiency.")
-                .font(.caption).foregroundStyle(.secondary)
-        }
     }
 }
 

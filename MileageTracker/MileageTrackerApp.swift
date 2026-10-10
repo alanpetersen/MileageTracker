@@ -7,7 +7,7 @@ struct MileageTrackerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            VehicleListView()
+            DashboardView()
                 .environment(settings)
                 .task { await settings.refreshGasPrice() }
         }

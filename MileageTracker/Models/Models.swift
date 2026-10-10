@@ -18,6 +18,8 @@ enum ReadingSource: String, Codable {
 
 @Model
 final class Vehicle {
+    /// Stable identifier so the dashboard can remember the selected vehicle across launches.
+    var uuid: UUID = UUID()
     var name: String
     var make: String
     var model: String

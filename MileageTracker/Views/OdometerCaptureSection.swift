@@ -1,10 +1,20 @@
 import SwiftUI
 
+enum EntryField: Hashable {
+    case odometer, quantity, cost
+}
+
 /// Odometer field with a camera button that runs OCR and lets the user confirm the detected value.
 struct OdometerCaptureSection: View {
     @Binding var odometerText: String
     @Binding var source: ReadingSource
     @Binding var photoData: Data?
+    var focus: FocusState<EntryField?>.Binding
+    var placeholder = "Odometer (mi)"
+    /// Open the camera as soon as the form appears.
+    var autoScan = false
+    /// Called after a scan fills in the odometer, so the form can jump to the next field.
+    var onScanned: () -> Void = {}
 
     @State private var showingCamera = false
     @State private var isReading = false
@@ -14,8 +24,9 @@ struct OdometerCaptureSection: View {
     var body: some View {
         Section {
             HStack {
-                TextField("Odometer (mi)", text: $odometerText)
+                TextField(placeholder, text: $odometerText)
                     .keyboardType(.decimalPad)
+                    .focused(focus, equals: .odometer)
                     .onChange(of: odometerText) { _, _ in
                         // Typing over a scanned value makes it a manual entry.
                         if !isReading, source == .camera, !candidates.contains(where: { format($0) == odometerText }) {
@@ -49,6 +60,12 @@ struct OdometerCaptureSection: View {
         .fullScreenCover(isPresented: $showingCamera) {
             CameraPicker { image in process(image) }.ignoresSafeArea()
         }
+        .task {
+            guard autoScan else { return }
+            // Let the sheet finish presenting before stacking the camera on top of it.
+            try? await Task.sleep(for: .milliseconds(500))
+            showingCamera = true
+        }
     }
 
     private func process(_ image: UIImage) {
@@ -61,8 +78,10 @@ struct OdometerCaptureSection: View {
             if let best = found.first {
                 odometerText = format(best)
                 source = .camera
+                onScanned()
             } else {
                 ocrMessage = "Couldn't find a reading in the photo — please type it in."
+                focus.wrappedValue = .odometer
             }
             isReading = false
         }
